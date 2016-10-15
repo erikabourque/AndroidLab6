@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="editTxtLoanAmount" type="id"/>
+    <item name="editTxtNumOfYears" type="id"/>
+    <item name="editTxtYearlyInterestRate" type="id"/>
+</resources>

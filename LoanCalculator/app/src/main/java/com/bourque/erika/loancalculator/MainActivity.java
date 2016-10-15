@@ -43,9 +43,48 @@ public class MainActivity extends AppCompatActivity {
         etLoanAmount.setLayoutParams(etParams);
         etLoanAmount.setHint(R.string.hintLoanAmount);
         etLoanAmount.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etLoanAmount.setId(R.id.editTxtLoanAmount);
         llFirstRow.addView(etLoanAmount);
 
         mainLayout.addView(llFirstRow);
+
+        // Second Row
+        LinearLayout llSecondRow = new LinearLayout(this);
+        llSecondRow.setLayoutParams(llParams);
+        llSecondRow.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView tvNumYears = new TextView(this);
+        tvNumYears.setLayoutParams(tvParams);
+        tvNumYears.setText(R.string.strNumOfYears);
+        llSecondRow.addView(tvNumYears);
+
+        EditText etNumYears = new EditText(this);
+        etNumYears.setLayoutParams(etParams);
+        etNumYears.setHint(R.string.hintNumOfYears);
+        etNumYears.setInputType(InputType.TYPE_CLASS_NUMBER);
+        etNumYears.setId(R.id.editTxtNumOfYears);
+        llSecondRow.addView(etNumYears);
+
+        mainLayout.addView(llSecondRow);
+
+        // Third Row
+        LinearLayout llThirdRow = new LinearLayout(this);
+        llThirdRow.setLayoutParams(llParams);
+        llThirdRow.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView tvInterestRate = new TextView(this);
+        tvInterestRate.setLayoutParams(tvParams);
+        tvInterestRate.setText(R.string.strYearlyInterestRate);
+        llThirdRow.addView(tvInterestRate);
+
+        EditText etInterestRate = new EditText(this);
+        etInterestRate.setLayoutParams(etParams);
+        etInterestRate.setHint(R.string.hintYearlyInterestRate);
+        etInterestRate.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etInterestRate.setId(R.id.editTxtYearlyInterestRate);
+        llThirdRow.addView(etInterestRate);
+
+        mainLayout.addView(llThirdRow);
     }
 
     /**
