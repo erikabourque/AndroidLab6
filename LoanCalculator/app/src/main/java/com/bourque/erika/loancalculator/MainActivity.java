@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         // Adding the views to it
         // Various Params
         LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams tvParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2f);
-        LinearLayout.LayoutParams etParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        LinearLayout.LayoutParams weightOfTwoParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2f);
+        LinearLayout.LayoutParams weightOfOneParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
 
         // First Row
         LinearLayout llFirstRow = new LinearLayout(this);
@@ -36,12 +36,12 @@ public class MainActivity extends AppCompatActivity {
         llFirstRow.setOrientation(LinearLayout.HORIZONTAL);
 
         TextView tvLoanAmount = new TextView(this);
-        tvLoanAmount.setLayoutParams(tvParams);
+        tvLoanAmount.setLayoutParams(weightOfTwoParams);
         tvLoanAmount.setText(R.string.strLoanAmount);
         llFirstRow.addView(tvLoanAmount);
 
         EditText etLoanAmount = new EditText(this);
-        etLoanAmount.setLayoutParams(etParams);
+        etLoanAmount.setLayoutParams(weightOfOneParams);
         etLoanAmount.setHint(R.string.hintLoanAmount);
         etLoanAmount.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
         etLoanAmount.setId(R.id.editTxtLoanAmount);
@@ -55,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
         llSecondRow.setOrientation(LinearLayout.HORIZONTAL);
 
         TextView tvNumYears = new TextView(this);
-        tvNumYears.setLayoutParams(tvParams);
+        tvNumYears.setLayoutParams(weightOfTwoParams);
         tvNumYears.setText(R.string.strNumOfYears);
         llSecondRow.addView(tvNumYears);
 
         EditText etNumYears = new EditText(this);
-        etNumYears.setLayoutParams(etParams);
+        etNumYears.setLayoutParams(weightOfOneParams);
         etNumYears.setHint(R.string.hintNumOfYears);
         etNumYears.setInputType(InputType.TYPE_CLASS_NUMBER);
         etNumYears.setId(R.id.editTxtNumOfYears);
@@ -74,12 +74,12 @@ public class MainActivity extends AppCompatActivity {
         llThirdRow.setOrientation(LinearLayout.HORIZONTAL);
 
         TextView tvInterestRate = new TextView(this);
-        tvInterestRate.setLayoutParams(tvParams);
+        tvInterestRate.setLayoutParams(weightOfTwoParams);
         tvInterestRate.setText(R.string.strYearlyInterestRate);
         llThirdRow.addView(tvInterestRate);
 
         EditText etInterestRate = new EditText(this);
-        etInterestRate.setLayoutParams(etParams);
+        etInterestRate.setLayoutParams(weightOfOneParams);
         etInterestRate.setHint(R.string.hintYearlyInterestRate);
         etInterestRate.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
         etInterestRate.setId(R.id.editTxtYearlyInterestRate);
@@ -93,15 +93,85 @@ public class MainActivity extends AppCompatActivity {
         llButtonRow.setOrientation(LinearLayout.HORIZONTAL);
 
         Button btnCalc = new Button(this);
-        btnCalc.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2f));
+        btnCalc.setLayoutParams(weightOfTwoParams);
         btnCalc.setText(R.string.strCalculate);
-        // btnCalc.setOnClickListener(new View.OnClickListener() {});
+        btnCalc.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view)
+            {
+                Double loanAmount;
+                int numOfYears;
+                Double yearlyInterestRate;
+                Double monthlyPayment;
+                Double totalCost;
+                Double totalInterest;
+
+                // Edit Text configured to only allow positive decimal numbers, no parse error
+                EditText editTxtLoanAmount = (EditText) findViewById(R.id.editTxtLoanAmount);
+                loanAmount = Double.parseDouble(editTxtLoanAmount.getText().toString());
+
+                // Edit Text configured to only allow positive whole numbers, no parse error
+                EditText editTxtNumOfYears = (EditText) findViewById(R.id.editTxtNumOfYears);
+                numOfYears = Integer.parseInt(editTxtNumOfYears.getText().toString());
+
+                // Edit Text configured to only allow positive decimal numbers, no parse error
+                EditText editTxtYearlyInterestRate = (EditText) findViewById(R.id.editTxtYearlyInterestRate);
+                yearlyInterestRate = Double.parseDouble(editTxtYearlyInterestRate.getText().toString());
+
+                try
+                {
+                    LoanCalculator calculator = new LoanCalculator(loanAmount, numOfYears, yearlyInterestRate);
+
+                    // Getting all values from the LoanCalculator
+                    monthlyPayment = calculator.getMonthlyPayment();
+                    totalCost = calculator.getTotalCostOfLoan();
+                    totalInterest = calculator.getTotalInterest();
+
+                    // Adding each value into their respective TextViews
+                    // Using String.format for better readability
+                    TextView txtViewMonthlyPayment = (TextView) findViewById(R.id.txtViewMonthlyPayment);
+                    txtViewMonthlyPayment.setText(String.format("%.2f", monthlyPayment));
+
+                    TextView txtViewTotalCostOfLoan = (TextView) findViewById(R.id.txtViewTotalCostOfLoan);
+                    txtViewTotalCostOfLoan.setText(String.format("%.2f", totalCost));
+
+                    TextView txtViewTotalInterest = (TextView) findViewById(R.id.txtViewTotalInterest);
+                    txtViewTotalInterest.setText(String.format("%.2f", totalInterest));
+                }
+                catch (IllegalArgumentException iae)
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage(iae.getMessage());
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
+        });
         llButtonRow.addView(btnCalc);
 
         Button btnClear = new Button(this);
-        btnClear.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+        btnClear.setLayoutParams(weightOfOneParams);
         btnClear.setText(R.string.strClear);
-        // btnClear.setOnClickListener(new View.OnClickListener() {});
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view)
+            {
+                // Get all the EditTexts and TextViews that need to be cleared
+                EditText loanAmount = (EditText) findViewById(R.id.editTxtLoanAmount);
+                EditText numOfYears = (EditText) findViewById(R.id.editTxtNumOfYears);
+                EditText yearlyInterestRate = (EditText) findViewById(R.id.editTxtYearlyInterestRate);
+
+                TextView monthlyPayment = (TextView) findViewById(R.id.txtViewMonthlyPayment);
+                TextView totalCostOfLoan = (TextView) findViewById(R.id.txtViewTotalCostOfLoan);
+                TextView totalInterest = (TextView) findViewById(R.id.txtViewTotalInterest);
+
+                // Set all the text to empty string
+                loanAmount.setText("");
+                numOfYears.setText("");
+                yearlyInterestRate.setText("");
+                monthlyPayment.setText("");
+                totalCostOfLoan.setText("");
+                totalInterest.setText("");
+            }
+        });
         llButtonRow.addView(btnClear);
 
         mainLayout.addView(llButtonRow);
@@ -118,12 +188,12 @@ public class MainActivity extends AppCompatActivity {
         llMonthlyPay.setOrientation(LinearLayout.HORIZONTAL);
 
         TextView tvMonthlyPayStr = new TextView(this);
-        tvMonthlyPayStr.setLayoutParams(tvParams);
+        tvMonthlyPayStr.setLayoutParams(weightOfTwoParams);
         tvMonthlyPayStr.setText(R.string.strYearlyInterestRate);
         llMonthlyPay.addView(tvMonthlyPayStr);
 
         TextView tvMonthlyPayAmt = new TextView(this);
-        tvMonthlyPayAmt.setLayoutParams(etParams);
+        tvMonthlyPayAmt.setLayoutParams(weightOfOneParams);
         tvMonthlyPayAmt.setId(R.id.txtViewMonthlyPayment);
         llMonthlyPay.addView(tvMonthlyPayAmt);
 
@@ -135,12 +205,12 @@ public class MainActivity extends AppCompatActivity {
         llTotalCost.setOrientation(LinearLayout.HORIZONTAL);
 
         TextView tvTotalCostStr = new TextView(this);
-        tvTotalCostStr.setLayoutParams(tvParams);
+        tvTotalCostStr.setLayoutParams(weightOfTwoParams);
         tvTotalCostStr.setText(R.string.strTotalCostOfLoan);
         llTotalCost.addView(tvTotalCostStr);
 
         TextView tvTotalCostAmt = new TextView(this);
-        tvTotalCostAmt.setLayoutParams(etParams);
+        tvTotalCostAmt.setLayoutParams(weightOfOneParams);
         tvTotalCostAmt.setId(R.id.txtViewTotalCostOfLoan);
         llTotalCost.addView(tvTotalCostAmt);
 
@@ -152,87 +222,15 @@ public class MainActivity extends AppCompatActivity {
         llTotalInterest.setOrientation(LinearLayout.HORIZONTAL);
 
         TextView tvTotalInterestStr = new TextView(this);
-        tvTotalInterestStr.setLayoutParams(tvParams);
+        tvTotalInterestStr.setLayoutParams(weightOfTwoParams);
         tvTotalInterestStr.setText(R.string.strTotalInterest);
         llTotalInterest.addView(tvTotalInterestStr);
 
         TextView tvTotalInterestAmt = new TextView(this);
-        tvTotalInterestAmt.setLayoutParams(etParams);
+        tvTotalInterestAmt.setLayoutParams(weightOfOneParams);
         tvTotalInterestAmt.setId(R.id.txtViewTotalInterest);
         llTotalInterest.addView(tvTotalInterestAmt);
 
         mainLayout.addView(llTotalInterest);
     }
-
-    /**
-    public void calculate(View view)
-    {
-        Double loanAmount;
-        int numOfYears;
-        Double yearlyInterestRate;
-        Double monthlyPayment;
-        Double totalCost;
-        Double totalInterest;
-
-        // Edit Text configured to only allow positive decimal numbers, no parse error
-        EditText editTxtLoanAmount = (EditText) findViewById(R.id.editTxtLoanAmount);
-        loanAmount = Double.parseDouble(editTxtLoanAmount.getText().toString());
-
-        // Edit Text configured to only allow positive whole numbers, no parse error
-        EditText editTxtNumOfYears = (EditText) findViewById(R.id.editTxtNumOfYears);
-        numOfYears = Integer.parseInt(editTxtNumOfYears.getText().toString());
-
-        // Edit Text configured to only allow positive decimal numbers, no parse error
-        EditText editTxtYearlyInterestRate = (EditText) findViewById(R.id.editTxtYearlyInterestRate);
-        yearlyInterestRate = Double.parseDouble(editTxtYearlyInterestRate.getText().toString());
-
-        try
-        {
-            LoanCalculator calculator = new LoanCalculator(loanAmount, numOfYears, yearlyInterestRate);
-
-            // Getting all values from the LoanCalculator
-            monthlyPayment = calculator.getMonthlyPayment();
-            totalCost = calculator.getTotalCostOfLoan();
-            totalInterest = calculator.getTotalInterest();
-
-            // Adding each value into their respective TextViews
-            // Using String.format for better readability
-            TextView txtViewMonthlyPayment = (TextView) findViewById(R.id.txtViewMonthlyPayment);
-            txtViewMonthlyPayment.setText(String.format("%.2f", monthlyPayment));
-
-            TextView txtViewTotalCostOfLoan = (TextView) findViewById(R.id.txtViewTotalCostOfLoan);
-            txtViewTotalCostOfLoan.setText(String.format("%.2f", totalCost));
-
-            TextView txtViewTotalInterest = (TextView) findViewById(R.id.txtViewTotalInterest);
-            txtViewTotalInterest.setText(String.format("%.2f", totalInterest));
-        }
-        catch (IllegalArgumentException iae)
-        {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(iae.getMessage());
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
-    }
-
-    public void clear(View view)
-    {
-        // Get all the EditTexts and TextViews that need to be cleared
-        EditText loanAmount = (EditText) findViewById(R.id.editTxtLoanAmount);
-        EditText numOfYears = (EditText) findViewById(R.id.editTxtNumOfYears);
-        EditText yearlyInterestRate = (EditText) findViewById(R.id.editTxtYearlyInterestRate);
-
-        TextView monthlyPayment = (TextView) findViewById(R.id.txtViewMonthlyPayment);
-        TextView totalCostOfLoan = (TextView) findViewById(R.id.txtViewTotalCostOfLoan);
-        TextView totalInterest = (TextView) findViewById(R.id.txtViewTotalInterest);
-
-        // Set all the text to empty string
-        loanAmount.setText("");
-        numOfYears.setText("");
-        yearlyInterestRate.setText("");
-        monthlyPayment.setText("");
-        totalCostOfLoan.setText("");
-        totalInterest.setText("");
-    }
-     */
 }
