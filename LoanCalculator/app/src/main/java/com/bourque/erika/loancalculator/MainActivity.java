@@ -112,7 +112,39 @@ public class MainActivity extends AppCompatActivity {
         tvResults.setText(R.string.strResults);
         mainLayout.addView(tvResults);
 
-        //
+        // Results Monthly payment
+        LinearLayout llMonthlyPay = new LinearLayout(this);
+        llMonthlyPay.setLayoutParams(llParams);
+        llMonthlyPay.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView tvMonthlyPayStr = new TextView(this);
+        tvMonthlyPayStr.setLayoutParams(tvParams);
+        tvMonthlyPayStr.setText(R.string.strYearlyInterestRate);
+        llMonthlyPay.addView(tvMonthlyPayStr);
+
+        TextView tvMonthlyPayAmt = new TextView(this);
+        tvMonthlyPayAmt.setLayoutParams(etParams);
+        tvMonthlyPayAmt.setId(R.id.txtViewMonthlyPayment);
+        llMonthlyPay.addView(tvMonthlyPayAmt);
+
+        mainLayout.addView(llMonthlyPay);
+
+        // Results Total Cost
+        LinearLayout llTotalCost = new LinearLayout(this);
+        llTotalCost.setLayoutParams(llParams);
+        llTotalCost.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView tvTotalCostStr = new TextView(this);
+        tvTotalCostStr.setLayoutParams(tvParams);
+        tvTotalCostStr.setText(R.string.strYearlyInterestRate);
+        llTotalCost.addView(tvTotalCostStr);
+
+        TextView tvTotalCostAmt = new TextView(this);
+        tvTotalCostAmt.setLayoutParams(etParams);
+        tvTotalCostAmt.setId(R.id.txtViewTotalCostOfLoan);
+        llTotalCost.addView(tvTotalCostAmt);
+
+        mainLayout.addView(llTotalCost);
     }
 
     /**

@@ -3,4 +3,6 @@
     <item name="editTxtLoanAmount" type="id"/>
     <item name="editTxtNumOfYears" type="id"/>
     <item name="editTxtYearlyInterestRate" type="id"/>
+    <item name="txtViewMonthlyPayment" type="id"/>
+    <item name="txtViewTotalCostOfLoan" type="id"/>
 </resources>
