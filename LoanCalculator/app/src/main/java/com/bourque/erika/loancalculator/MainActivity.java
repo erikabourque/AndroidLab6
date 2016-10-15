@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -85,6 +86,33 @@ public class MainActivity extends AppCompatActivity {
         llThirdRow.addView(etInterestRate);
 
         mainLayout.addView(llThirdRow);
+
+        // Button Row
+        LinearLayout llButtonRow = new LinearLayout(this);
+        llButtonRow.setLayoutParams(llParams);
+        llButtonRow.setOrientation(LinearLayout.HORIZONTAL);
+
+        Button btnCalc = new Button(this);
+        btnCalc.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2f));
+        btnCalc.setText(R.string.strCalculate);
+        // btnCalc.setOnClickListener(new View.OnClickListener() {});
+        llButtonRow.addView(btnCalc);
+
+        Button btnClear = new Button(this);
+        btnClear.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+        btnClear.setText(R.string.strClear);
+        // btnClear.setOnClickListener(new View.OnClickListener() {});
+        llButtonRow.addView(btnClear);
+
+        mainLayout.addView(llButtonRow);
+
+        // Result Title Row
+        TextView tvResults = new TextView(this);
+        tvResults.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        tvResults.setText(R.string.strResults);
+        mainLayout.addView(tvResults);
+
+        //
     }
 
     /**
