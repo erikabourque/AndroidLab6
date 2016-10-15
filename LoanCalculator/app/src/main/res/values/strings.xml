@@ -1,0 +1,15 @@
+<resources>
+    <string name="strAppName">Loan Calculator</string>
+    <string name="strLoanAmount">Loan Amount: </string>
+    <string name="strNumOfYears">Duration of Loan: </string>
+    <string name="strYearlyInterestRate">Yearly Interest Rate: </string>
+    <string name="strMonthlyPayment">Monthly Payment Due: </string>
+    <string name="strTotalCostOfLoan">Total Cost of Loan: </string>
+    <string name="strTotalInterest">Total Amount of Interest: </string>
+    <string name="strCalculate">Calculate</string>
+    <string name="strClear">Clear</string>
+    <string name="strResults">Results</string>
+    <string name="hintLoanAmount">10000</string>
+    <string name="hintNumOfYears">5</string>
+    <string name="hintYearlyInterestRate">2.5</string>
+</resources>
