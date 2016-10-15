@@ -2,11 +2,15 @@ package com.bourque.erika.loancalculator;
 
 import android.icu.text.DecimalFormat;
 import android.icu.text.NumberFormat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,8 +19,36 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Getting the LinearLayout Object
+        LinearLayout mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
+
+        // Adding the views to it
+        // Various Params
+        LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams tvParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2f);
+        LinearLayout.LayoutParams etParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+
+        // First Row
+        LinearLayout llFirstRow = new LinearLayout(this);
+        llFirstRow.setLayoutParams(llParams);
+        llFirstRow.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView tvLoanAmount = new TextView(this);
+        tvLoanAmount.setLayoutParams(tvParams);
+        tvLoanAmount.setText(R.string.strLoanAmount);
+        llFirstRow.addView(tvLoanAmount);
+
+        EditText etLoanAmount = new EditText(this);
+        etLoanAmount.setLayoutParams(etParams);
+        etLoanAmount.setHint(R.string.hintLoanAmount);
+        etLoanAmount.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        llFirstRow.addView(etLoanAmount);
+
+        mainLayout.addView(llFirstRow);
     }
 
+    /**
     public void calculate(View view)
     {
         Double loanAmount;
@@ -86,4 +118,5 @@ public class MainActivity extends AppCompatActivity {
         totalCostOfLoan.setText("");
         totalInterest.setText("");
     }
+     */
 }

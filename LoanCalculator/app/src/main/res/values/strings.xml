@@ -1,5 +1,5 @@
 <resources>
-    <string name="strAppName">Loan Calculator</string>
+    <string name="strAppName">Loan Calculator V2</string>
     <string name="strLoanAmount">Loan Amount: </string>
     <string name="strNumOfYears">Duration of Loan: </string>
     <string name="strYearlyInterestRate">Yearly Interest Rate: </string>
