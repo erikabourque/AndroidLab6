@@ -129,14 +129,14 @@ public class MainActivity extends AppCompatActivity {
 
         mainLayout.addView(llMonthlyPay);
 
-        // Results Total Cost
+        // Results Total Cost row
         LinearLayout llTotalCost = new LinearLayout(this);
         llTotalCost.setLayoutParams(llParams);
         llTotalCost.setOrientation(LinearLayout.HORIZONTAL);
 
         TextView tvTotalCostStr = new TextView(this);
         tvTotalCostStr.setLayoutParams(tvParams);
-        tvTotalCostStr.setText(R.string.strYearlyInterestRate);
+        tvTotalCostStr.setText(R.string.strTotalCostOfLoan);
         llTotalCost.addView(tvTotalCostStr);
 
         TextView tvTotalCostAmt = new TextView(this);
@@ -145,6 +145,23 @@ public class MainActivity extends AppCompatActivity {
         llTotalCost.addView(tvTotalCostAmt);
 
         mainLayout.addView(llTotalCost);
+
+        // Results Total Interest row
+        LinearLayout llTotalInterest = new LinearLayout(this);
+        llTotalInterest.setLayoutParams(llParams);
+        llTotalInterest.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView tvTotalInterestStr = new TextView(this);
+        tvTotalInterestStr.setLayoutParams(tvParams);
+        tvTotalInterestStr.setText(R.string.strTotalInterest);
+        llTotalInterest.addView(tvTotalInterestStr);
+
+        TextView tvTotalInterestAmt = new TextView(this);
+        tvTotalInterestAmt.setLayoutParams(etParams);
+        tvTotalInterestAmt.setId(R.id.txtViewTotalInterest);
+        llTotalInterest.addView(tvTotalInterestAmt);
+
+        mainLayout.addView(llTotalInterest);
     }
 
     /**

@@ -5,4 +5,5 @@
     <item name="editTxtYearlyInterestRate" type="id"/>
     <item name="txtViewMonthlyPayment" type="id"/>
     <item name="txtViewTotalCostOfLoan" type="id"/>
+    <item name="txtViewTotalInterest" type="id"/>
 </resources>
